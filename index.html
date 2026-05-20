@@ -48,7 +48,16 @@
       border-bottom:1px solid rgba(255,255,255,.12);
     }
     .nav .inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-    .logo{color:white;font-size:24px;font-weight:950;letter-spacing:-.04em;white-space:nowrap}
+    .logo{
+  display:flex;
+  align-items:center;
+}
+
+.logo img{
+  height:42px;
+  width:auto;
+  display:block;
+}
     .logo span{font-size:13px;font-weight:800;margin-left:8px;opacity:.82}
     .links{display:flex;gap:18px;color:rgba(255,255,255,.78);font-size:14px;font-weight:800}
     .links a:hover{color:white}
@@ -469,7 +478,9 @@
 <body>
   <header class="nav">
     <div class="wrap inner">
-      <a class="logo" href="#top">YC <span>YC 코퍼레이션</span></a>
+      <a class="logo" href="#top">
+  <img src="https://i.imgur.com/6dnaHmA.png" alt="YC 코퍼레이션 로고">
+</a>
       <nav class="links">
         <a href="#why">도입 배경</a>
         <a href="#architecture">구성 방식</a>
