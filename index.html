@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>작업자 안전 경보 시스템 | YC 코퍼레이션</title>
+  <meta name="description" content="음성 인식 기반 위험 감지, 설비 비상정지, 현장 경보, CCTV 관제, 모바일 알림까지 연결하는 제조현장 스마트 안전 경보 시스템" />
+
+  <!--
+    이미지 링크 교체 위치
+    아래 IMAGE_URL_01 ~ IMAGE_URL_13 부분만 실제 이미지 주소로 바꾸면 됩니다.
+    예: https://your-domain.com/images/factory-control-room.jpg
+  -->
+
+  <style>
+    :root{
+      --dark:#020817;
+      --navy:#061529;
+      --blue:#1557ff;
+      --blue2:#18a8ff;
+      --red:#ff354a;
+      --green:#20c77a;
+      --yellow:#ffbc32;
+      --text:#071527;
+      --sub:#53657a;
+      --line:#d7e6f6;
+      --paper:#f5faff;
+      --white:#fff;
+      --shadow:0 24px 70px rgba(3,20,45,.16);
+      --soft:0 14px 38px rgba(3,20,45,.10);
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Pretendard,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
+      color:var(--text);
+      background:var(--paper);
+      line-height:1.62;
+      letter-spacing:-0.025em;
+      word-break:keep-all;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;width:100%;height:auto}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin:0 auto}
+
+    .nav{
+      position:fixed;top:0;left:0;right:0;z-index:50;
+      background:rgba(2,8,23,.78);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .nav .inner{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+    .logo{color:white;font-size:24px;font-weight:950;letter-spacing:-.04em;white-space:nowrap}
+    .logo span{font-size:13px;font-weight:800;margin-left:8px;opacity:.82}
+    .links{display:flex;gap:18px;color:rgba(255,255,255,.78);font-size:14px;font-weight:800}
+    .links a:hover{color:white}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      min-height:50px;padding:0 24px;border-radius:999px;
+      background:linear-gradient(135deg,var(--blue),#092ed4);
+      color:white;font-weight:900;font-size:15px;
+      box-shadow:0 14px 30px rgba(21,87,255,.28);
+      transition:.22s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-2px);box-shadow:0 20px 38px rgba(21,87,255,.34)}
+    .btn.ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);box-shadow:none}
+
+    .hero{
+      min-height:100vh;
+      position:relative;
+      overflow:hidden;
+      color:white;
+      padding:132px 0 86px;
+      background:
+        linear-gradient(90deg,rgba(2,8,23,.96) 0%,rgba(2,8,23,.88) 44%,rgba(2,8,23,.44) 100%),
+        url("IMAGE_URL_01_HERO_FACTORY_CONTROL_ROOM") center/cover no-repeat;
+    }
+    .hero::before{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px),
+        linear-gradient(0deg,rgba(255,255,255,.035) 1px,transparent 1px);
+      background-size:78px 78px;
+      mask-image:linear-gradient(90deg,#000 0%,rgba(0,0,0,.72) 42%,transparent 85%);
+    }
+    .hero::after{
+      content:"";position:absolute;right:-12%;bottom:-18%;width:58%;height:48%;
+      background:linear-gradient(135deg,rgba(21,87,255,.64),rgba(21,87,255,.08));
+      clip-path:polygon(14% 0,100% 0,80% 100%,0 100%);
+      opacity:.9;
+    }
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr .88fr;gap:58px;align-items:center}
+    .chip-label{
+      display:inline-flex;align-items:center;gap:9px;
+      padding:9px 15px;border-radius:999px;
+      background:rgba(21,87,255,.17);border:1px solid rgba(120,170,255,.28);
+      color:#c9ddff;font-weight:900;font-size:14px;
+      margin-bottom:24px;
+    }
+    h1,h2,h3,p{margin-top:0}
+    h1{
+      margin-bottom:24px;
+      font-size:clamp(40px,5vw,66px);
+      line-height:1.14;
+      letter-spacing:-.055em;
+      font-weight:950;
+    }
+    h1 strong{color:#4d72ff}
+    .hero p{max-width:680px;margin-bottom:32px;color:rgba(255,255,255,.86);font-size:clamp(17px,1.8vw,22px);font-weight:650;line-height:1.72}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .control-card{
+      position:relative;
+      border-radius:34px;
+      padding:28px;
+      background:rgba(6,19,38,.78);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 28px 80px rgba(0,0,0,.36);
+      backdrop-filter:blur(14px);
+      overflow:hidden;
+    }
+    .control-card::before{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(135deg,rgba(24,168,255,.13),transparent 42%);
+      pointer-events:none;
+    }
+    .mock-top{position:relative;z-index:1;height:52px;display:flex;align-items:center;gap:8px;color:#a9bfdc;font-weight:900;border-bottom:1px solid rgba(255,255,255,.1);margin:-4px 0 18px}
+    .dot{width:10px;height:10px;border-radius:50%;background:#ff465c}.dot:nth-child(2){background:#ffbd3a}.dot:nth-child(3){background:#2ed985}
+    .alert-box{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px;border-radius:18px;background:rgba(255,53,74,.15);border:1px solid rgba(255,53,74,.45);font-weight:900}
+    .pulse{width:15px;height:15px;flex:0 0 auto;background:var(--red);border-radius:50%;box-shadow:0 0 0 0 rgba(255,53,74,.7);animation:pulse 1.5s infinite}
+    @keyframes pulse{70%{box-shadow:0 0 0 15px rgba(255,53,74,0)}100%{box-shadow:0 0 0 0 rgba(255,53,74,0)}}
+    .status-grid{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+    .status{background:#13243b;border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:16px}
+    .status b{display:block;font-size:13px;color:#9db5d4;margin-bottom:6px}
+    .status span{font-size:20px;font-weight:950}
+    .red{color:#ff5c70}.yellow{color:#ffc451}.cyan{color:#55d8ff}.green{color:#78ffb6}
+    .message{position:relative;z-index:1;margin-top:14px;background:white;color:var(--text);border-radius:20px;padding:16px;display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:center}
+    .message .icon{height:52px;border-radius:16px;background:#eaf2ff;display:grid;place-items:center;font-size:26px}
+    .message strong{display:block;font-size:16px;line-height:1.35}
+    .message small{display:block;color:#64758a;font-weight:800;margin-top:4px}
+
+    section{padding:96px 0}
+    .head{margin-bottom:38px}
+    .kicker{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);font-weight:950;margin-bottom:10px}
+    h2{font-size:clamp(34px,4vw,54px);line-height:1.18;letter-spacing:-.05em;font-weight:950;margin-bottom:0}
+    .lead{max-width:900px;margin-top:16px;margin-bottom:0;font-size:19px;line-height:1.78;color:#2c4059;font-weight:780}
+
+    .problem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .photo-card{background:white;border:1px solid var(--line);border-radius:28px;box-shadow:var(--soft);overflow:hidden}
+    .photo-card img{height:190px;object-fit:cover}
+    .photo-card-body{padding:22px}
+    .num{display:inline-grid;place-items:center;width:46px;height:46px;border-radius:15px;background:#e8f0ff;color:var(--blue);font-weight:950;margin-bottom:16px}
+    .photo-card h3{margin-bottom:8px;font-size:21px;line-height:1.32;letter-spacing:-.04em}
+    .photo-card p{margin:0;color:#53657a;font-weight:650;line-height:1.66}
+
+    .white{background:#fff}
+    .arch-layout{display:grid;grid-template-columns:.74fr 1.26fr;gap:28px;align-items:stretch}
+    .dark-box{background:linear-gradient(180deg,#061326,#0a2444);color:white;border-radius:34px;padding:34px;box-shadow:var(--shadow)}
+    .dark-box h3{font-size:31px;line-height:1.22;letter-spacing:-.045em;margin-bottom:16px}
+    .dark-box p{color:rgba(255,255,255,.78);font-weight:650;line-height:1.72;margin-bottom:22px}
+    .legend{display:grid;gap:12px}
+    .legend div{padding:14px 16px;border-radius:15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-weight:900;line-height:1.45}
+    .arch-visual{background:#eef6ff;border:1px solid var(--line);border-radius:34px;padding:22px;box-shadow:var(--shadow)}
+    .layers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;height:100%}
+    .layer{
+      background:white;
+      border:1px solid #d6e6f7;
+      border-radius:24px;
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      position:relative;
+      min-width:0;
+    }
+    .layer:not(:last-child)::after{content:"";position:absolute;right:-13px;top:50%;width:14px;height:2px;background:var(--blue)}
+    .layer h3{
+      margin:0 0 6px;
+      color:#061f7a;
+      font-size:18px;
+      line-height:1.35;
+      letter-spacing:-.035em;
+      min-height:48px;
+    }
+    .chip{
+      background:#f2f7ff;
+      border:1px solid #d7e6f7;
+      border-radius:14px;
+      padding:12px 10px;
+      font-weight:850;
+      font-size:13px;
+      line-height:1.45;
+      min-height:56px;
+      display:flex;
+      align-items:center;
+    }
+    .chip .ico{
+      display:inline-grid;
+      place-items:center;
+      width:24px;
+      height:24px;
+      flex:0 0 24px;
+      margin-right:8px;
+      border-radius:8px;
+      background:#e3efff;
+      color:#1557ff;
+      font-size:14px;
+    }
+    .chip span:last-child{
+      display:block;
+      min-width:0;
+      overflow-wrap:normal;
+      word-break:keep-all;
+    }
+    .photo-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+    .photo-strip img{height:174px;object-fit:cover;border-radius:24px;box-shadow:var(--soft)}
+
+    .package{background:linear-gradient(180deg,#020817,#061326);color:white;position:relative;overflow:hidden}
+    .package .lead{color:rgba(255,255,255,.78)}
+    .module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .module{background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.13);border-radius:30px;overflow:hidden;box-shadow:0 18px 45px rgba(0,0,0,.18)}
+    .module img{height:190px;object-fit:cover}
+    .module-body{padding:24px}
+    .module-no{display:inline-flex;padding:7px 13px;border-radius:999px;background:var(--blue);font-weight:950;margin-bottom:14px}
+    .module h3{font-size:23px;line-height:1.34;letter-spacing:-.04em;margin-bottom:12px}
+    .module ul{margin:0;padding-left:18px;color:rgba(255,255,255,.82);font-weight:650;line-height:1.75}
+    .module li{margin:4px 0}
+
+    .flow{background:#f1f8ff}
+    .flow-map{background:white;border:1px solid var(--line);border-radius:34px;box-shadow:var(--shadow);padding:30px;overflow:hidden}
+    .flow-track{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+    .flow-step{background:white;border:1px solid #d9e7f5;border-radius:22px;padding:18px;text-align:center;min-height:162px;box-shadow:0 12px 28px rgba(7,22,43,.08);position:relative}
+    .flow-step:not(:last-child)::after{content:"";position:absolute;right:-16px;top:78px;width:16px;height:3px;background:var(--blue)}
+    .flow-step:nth-child(n+7){margin-top:34px}
+    .flow-no{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:12px;background:var(--blue);color:#fff;font-weight:950;margin-bottom:10px;font-size:13px}
+    .flow-step .emoji{font-size:34px;display:block;margin-bottom:8px}
+    .flow-step b{display:block;font-size:16px;line-height:1.32;margin-bottom:8px}
+    .flow-step small{color:#5e6e82;font-weight:760;line-height:1.48}
+    .flow-photo{
+      margin-top:24px;
+      width:100%;
+      height:auto;
+      max-height:none;
+      object-fit:contain;
+      object-position:center;
+      border-radius:28px;
+      box-shadow:var(--soft);
+      background:#eef6ff;
+      padding:14px;
+    }
+
+    .field-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:30px;align-items:center}
+    .field-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .field-gallery img{height:190px;object-fit:cover;border-radius:26px;box-shadow:var(--soft)}
+    .field-gallery img.tall{grid-row:span 2;height:394px}
+
+    .target-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .target-card{background:white;border:1px solid var(--line);border-radius:28px;box-shadow:var(--soft);overflow:hidden}
+    .target-card img{height:172px;object-fit:cover}
+    .target-card p{margin:0;padding:22px;font-size:18px;font-weight:900;line-height:1.55}
+    .benefit-box{margin-top:34px;background:#07162b;color:white;border-radius:34px;padding:34px;box-shadow:var(--shadow)}
+    .benefit-box h3{font-size:31px;line-height:1.22;margin-bottom:22px;letter-spacing:-.04em}
+    .benefit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .benefit{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13);border-radius:22px;padding:20px;font-weight:900;line-height:1.55}
+
+    .diff-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .diff-card{display:grid;grid-template-columns:84px 1fr;gap:18px;align-items:center;background:#f2f8ff;border:1px solid var(--line);border-radius:28px;padding:24px}
+    .diff-card .ico{height:84px;border-radius:25px;background:#07162b;color:white;display:grid;place-items:center;font-size:38px}
+    .diff-card h3{font-size:22px;line-height:1.36;margin-bottom:7px;letter-spacing:-.04em}
+    .diff-card p{margin:0;color:#52647b;font-weight:650;line-height:1.65}
+    .final-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+    .final-gallery img{height:230px;object-fit:cover;border-radius:26px;box-shadow:var(--soft)}
+
+    .cta{padding:90px 0;color:white;text-align:center;background:linear-gradient(90deg,rgba(2,8,23,.96),rgba(2,8,23,.76)),url("IMAGE_URL_04_CONTROL_ROOM") center/cover no-repeat}
+    .cta h2{max-width:900px;margin:0 auto 18px}
+    .cta p{max-width:760px;margin:0 auto 30px;color:rgba(255,255,255,.82);font-size:21px;line-height:1.72;font-weight:650}
+    footer{background:#020817;color:rgba(255,255,255,.72);padding:32px 0}
+    footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:14px}
+
+    @media(max-width:1000px){
+      .links{display:none}
+      .nav .inner{height:66px}
+      .hero{padding-top:112px;min-height:auto}
+      .hero-grid,.arch-layout,.field-layout,.problem-grid,.layers,.module-grid,.flow-track,.field-gallery,.target-grid,.benefit-grid,.diff-grid,.final-gallery,.photo-strip{grid-template-columns:1fr}
+      .control-card{margin-top:8px}
+      .flow-step:not(:last-child)::after,.layer:not(:last-child)::after{display:none}
+      .flow-step:nth-child(n+7){margin-top:0}
+      .field-gallery img.tall{height:190px}
+      h1{letter-spacing:-.045em}
+      section{padding:74px 0}
+      .layer h3{min-height:0}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap inner">
+      <a class="logo" href="#top">YC <span>YC 코퍼레이션</span></a>
+      <nav class="links">
+        <a href="#why">도입 배경</a>
+        <a href="#architecture">구성 방식</a>
+        <a href="#package">구성품</a>
+        <a href="#flow">운영 흐름</a>
+        <a href="#field">적용 현장</a>
+        <a href="#benefit">기대효과</a>
+      </nav>
+      <a class="btn" href="#contact">상담 문의</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="chip-label">음성인식 기반 작업자 안전 경보 시스템</div>
+          <h1>위험 신호를 감지하고<br><strong>정지·경보·CCTV 확인</strong>까지<br>한 번에 연결합니다</h1>
+          <p>작업자가 버튼을 누르기 어려운 순간에도 음성 위험 신호와 고음량 이상 신호를 감지해 설비 비상정지, 현장 경보, 관리자 알림, CCTV 확인 링크까지 자동으로 연계합니다.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#flow">운영 흐름 보기</a>
+            <a class="btn ghost" href="#architecture">구성 방식 확인</a>
+          </div>
+        </div>
+
+        <div class="control-card">
+          <div class="mock-top"><span class="dot"></span><span class="dot"></span><span class="dot"></span> SAFETY CONTROL CENTER</div>
+          <div class="alert-box">비상 이벤트 발생 · 음성 위험 신호 감지 <span class="pulse"></span></div>
+          <div class="status-grid">
+            <div class="status"><b>설비 상태</b><span class="red">정지 명령</span></div>
+            <div class="status"><b>현장 경보</b><span class="yellow">타워램프 ON</span></div>
+            <div class="status"><b>CCTV</b><span class="cyan">링크 생성</span></div>
+            <div class="status"><b>이력</b><span class="green">자동 저장</span></div>
+          </div>
+          <div class="message">
+            <div class="icon">🚨</div>
+            <div><strong>[긴급] 2공정 비상 이벤트 감지</strong><small>발생시각 · 설비명 · 이벤트 유형 · CCTV URL 포함</small></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why">
+      <div class="wrap">
+        <div class="head">
+          <div class="kicker">Why Now</div>
+          <h2>제조현장의 사고 대응은<br>“감지 이후 몇 초”에서 갈립니다</h2>
+          <p class="lead">소음, 설비 밀집, 사각지대, 단독 작업 환경에서는 위험 상황 공유와 관리자 확인이 늦어질 수 있습니다.</p>
+        </div>
+
+        <div class="problem-grid">
+          <article class="photo-card">
+            <img src="https://i.imgur.com/JTi8djX.jpeg" alt="산업 설비 비상정지 버튼">
+            <div class="photo-card-body"><div class="num">01</div><h3>손이 닿지 않는 순간</h3><p>끼임·협착 등 급박한 상황에서는 작업자가 비상정지 버튼을 직접 누르기 어려울 수 있습니다.</p></div>
+          </article>
+          <article class="photo-card">
+            <img src="https://i.imgur.com/VZKWqQv.jpeg" alt="제조현장 작업자 안전 상황">
+            <div class="photo-card-body"><div class="num">02</div><h3>현장 소음과 사각지대</h3><p>비명이나 도움 요청이 설비 소음에 묻히면 주변 전파와 초기 대응이 지연됩니다.</p></div>
+          </article>
+          <article class="photo-card">
+            <img src="https://i.imgur.com/Ze0rPtI.jpeg" alt="CCTV 관제실 모니터링">
+            <div class="photo-card-body"><div class="num">03</div><h3>관리자 부재 시간</h3><p>상시 관제 인력이 없거나 야간·단독 작업이 있는 현장은 즉시 확인 체계가 필요합니다.</p></div>
+          </article>
+          <article class="photo-card">
+            <img src="https://i.imgur.com/Hm8pJE4.jpeg" alt="제조현장 위험 공정">
+            <div class="photo-card-body"><div class="num">04</div><h3>기록 없는 비상 대응</h3><p>누가, 언제, 어떤 상황에서 발생했는지 남지 않으면 사후 관리와 재발 방지가 어렵습니다.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="white" id="architecture">
+      <div class="wrap">
+        <div class="head">
+          <div class="kicker">System Architecture</div>
+          <h2>현장 장치에서 관리자 화면까지<br>한 번에 이어지는 통합 구조</h2>
+          <p class="lead">실제 연결 흐름을 기준으로 입력·출력·제어·알림·영상 계층을 구분해 한눈에 이해되도록 구성했습니다.</p>
+        </div>
+
+        <div class="arch-layout">
+          <div class="dark-box">
+            <h3>감지부터 확인까지<br>단절 없이 연결</h3>
+            <p>음성 인식 신호가 단순 알림에서 끝나지 않고, 설비 제어와 CCTV 확인, 이력 저장까지 이어지도록 구성합니다.</p>
+            <div class="legend">
+              <div>✓ INPUT : 음성 인식 마이크 모듈</div>
+              <div>✓ OUTPUT : 비상정지 센서 · 타워램프 · 부저</div>
+              <div>✓ CONTROL : 음성인식 처리 프로그램 · PC 관제 시스템</div>
+              <div>✓ NOTIFY : 관리자 웹 · 작업자 모바일 화면</div>
+              <div>✓ VIDEO : CCTV 실시간 스트리밍 URL 연계</div>
+            </div>
+          </div>
+
+          <div class="arch-visual">
+            <div class="layers">
+              <div class="layer">
+                <h3>현장 디바이스</h3>
+                <div class="chip"><span class="ico">M</span><span>음성 인식 마이크</span></div>
+                <div class="chip"><span class="ico">S</span><span>비상 정지 센서</span></div>
+                <div class="chip"><span class="ico">A</span><span>타워램프 / 부저</span></div>
+                <div class="chip"><span class="ico">C</span><span>CCTV</span></div>
+              </div>
+              <div class="layer">
+                <h3>현장 네트워크</h3>
+                <div class="chip"><span class="ico">N</span><span>Ethernet / Wi‑Fi</span></div>
+                <div class="chip"><span class="ico">I</span><span>장비 제어 신호</span></div>
+                <div class="chip"><span class="ico">V</span><span>스트리밍 연결</span></div>
+              </div>
+              <div class="layer">
+                <h3>관제 PC 서버</h3>
+                <div class="chip"><span class="ico">E</span><span>소음 처리 엔진</span></div>
+                <div class="chip"><span class="ico">W</span><span>지정 언어 인식</span></div>
+                <div class="chip"><span class="ico">D</span><span>비명 감지</span></div>
+                <div class="chip"><span class="ico">L</span><span>이벤트 로그 DB</span></div>
+              </div>
+              <div class="layer">
+                <h3>알림 및 제어</h3>
+                <div class="chip"><span class="ico">W</span><span>웹 페이지</span></div>
+                <div class="chip"><span class="ico">M</span><span>모바일 페이지</span></div>
+                <div class="chip"><span class="ico">T</span><span>알림 메시지</span></div>
+                <div class="chip"><span class="ico">R</span><span>수동 해제 / 저장</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-strip">
+          <img src="https://i.imgur.com/rTSAH5z.jpeg" alt="현장 타워램프 경보">
+          <img src="https://i.imgur.com/K5l78gL.png" alt="관제 시스템 화면">
+          <img src="https://i.imgur.com/4Cv6YzV.png" alt="산업용 CCTV 카메라">
+          <img src="https://i.imgur.com/JTi8djX.jpeg" alt="비상정지 버튼">
+        </div>
+      </div>
+    </section>
+
+    <section class="package" id="package">
+      <div class="wrap">
+        <div class="head">
+          <div class="kicker">System Package</div>
+          <h2>현장 적용에 필요한 구성품을<br>하나의 패키지로 제공합니다</h2>
+          <p class="lead">단품 장비 나열이 아니라, 위험 감지와 제어, 알림, 영상 확인까지 실제 운영 흐름에 맞춰 묶은 구조입니다.</p>
+        </div>
+
+        <div class="module-grid">
+          <article class="module">
+            <img src="https://i.imgur.com/lVJrUTH.png" alt="음성 인식 마이크 모듈">
+            <div class="module-body"><span class="module-no">01</span><h3>음성 인식 마이크 모듈</h3><ul><li>작업장 내 음성 신호 수집</li><li>지정 위험 언어 인식용 입력</li><li>비명·고음량 데시벨 감지</li></ul></div>
+          </article>
+          <article class="module">
+            <img src="https://i.imgur.com/NhmoIum.png" alt="음성 인식 처리 프로그램">
+            <div class="module-body"><span class="module-no">02</span><h3>음성인식 처리 프로그램</h3><ul><li>위험 언어 인식</li><li>고음량 신호 감지</li><li>비상 이벤트 생성 및 연동</li></ul></div>
+          </article>
+          <article class="module">
+            <img src="https://i.imgur.com/JTi8djX.jpeg" alt="비상정지 제어 모듈">
+            <div class="module-body"><span class="module-no">03</span><h3>비상정지 제어 모듈</h3><ul><li>비상 이벤트 신호 수신</li><li>설비 정지 신호 전달</li><li>비상정지 동작 수행</li></ul></div>
+          </article>
+          <article class="module">
+            <img src="https://i.imgur.com/K5l78gL.png" alt="PC 관제 시스템">
+            <div class="module-body"><span class="module-no">04</span><h3>PC 관제 시스템</h3><ul><li>실시간 이벤트 모니터링</li><li>비상 이벤트 이력 기록</li><li>알림 메시지 자동 발송</li><li>실시간 확인 링크 연계</li></ul></div>
+          </article>
+          <article class="module">
+            <img src="https://i.imgur.com/rTSAH5z.jpeg" alt="경보장치 타워램프">
+            <div class="module-body"><span class="module-no">05</span><h3>경보장치</h3><ul><li>타워램프·부저 연동</li><li>현장 시각·청각 경보</li><li>작업자 환기 및 대응 유도</li></ul></div>
+          </article>
+          <article class="module">
+            <img src="https://i.imgur.com/4Cv6YzV.png" alt="산업용 CCTV">
+            <div class="module-body"><span class="module-no">06</span><h3>CCTV</h3><ul><li>실시간 현장 영상 확인</li><li>알림 메시지 내 URL 연계</li><li>현장 인력 상황 파악 지원</li></ul></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="flow" id="flow">
+      <div class="wrap">
+        <div class="head">
+          <div class="kicker">Operation Flow</div>
+          <h2>12단계 운영 흐름을<br>시각적인 대응 맵으로 구성</h2>
+          <p class="lead">브로셔 이미지를 그대로 넣지 않고, 랜딩페이지에서 보기 좋은 흐름도로 새로 구성했습니다.</p>
+        </div>
+
+        <div class="flow-map">
+          <div class="flow-track">
+            <div class="flow-step"><div class="flow-no">01</div><span class="emoji">⚠️</span><b>위험 상황 발생</b><small>끼임·협착·도움 요청</small></div>
+            <div class="flow-step"><div class="flow-no">02</div><span class="emoji">🎙️</span><b>음성 감지</b><small>위험 언어·비명 감지</small></div>
+            <div class="flow-step"><div class="flow-no">03</div><span class="emoji">🚨</span><b>비상 이벤트 생성</b><small>관제 프로그램 판단</small></div>
+            <div class="flow-step"><div class="flow-no">04</div><span class="emoji">📡</span><b>이벤트 수신</b><small>제어 모듈 전달</small></div>
+            <div class="flow-step"><div class="flow-no">05</div><span class="emoji">🔌</span><b>제어 신호 전송</b><small>설비 입력부 연계</small></div>
+            <div class="flow-step"><div class="flow-no">06</div><span class="emoji">🖥️</span><b>비상 화면 출력</b><small>관제 화면 팝업</small></div>
+            <div class="flow-step"><div class="flow-no">07</div><span class="emoji">🔁</span><b>출력 신호 전달</b><small>제어 회로 연결</small></div>
+            <div class="flow-step"><div class="flow-no">08</div><span class="emoji">⛔</span><b>설비 비상정지</b><small>장비 동작 차단</small></div>
+            <div class="flow-step"><div class="flow-no">09</div><span class="emoji">🚦</span><b>경보장치 작동</b><small>타워램프·부저</small></div>
+            <div class="flow-step"><div class="flow-no">10</div><span class="emoji">👁️</span><b>현장 상황 확인</b><small>CCTV 링크 확인</small></div>
+            <div class="flow-step"><div class="flow-no">11</div><span class="emoji">📲</span><b>관리자 알림 발송</b><small>모바일 메시지</small></div>
+            <div class="flow-step"><div class="flow-no">12</div><span class="emoji">✅</span><b>수동 해제 및 저장</b><small>조치 이력 관리</small></div>
+          </div>
+          <img class="flow-photo" src="https://i.imgur.com/gIyB5gn.jpeg" alt="모바일 알림과 사고 이력 화면">
+        </div>
+      </div>
+    </section>
+
+    <section class="white" id="field">
+      <div class="wrap field-layout">
+        <div>
+          <div class="kicker">Real-World Scenes</div>
+          <h2>실제 제조현장에 맞춰<br>설치 포인트를 검토합니다</h2>
+          <p class="lead">설비, 경보장치, 관제 화면, 작업자 동선까지 함께 고려해 중소 제조현장에 부담이 적은 안전관리 체계를 제안합니다.</p>
+        </div>
+        <div class="field-gallery">
+          <img class="tall" src="https://i.imgur.com/K5l78gL.png" alt="관제실 실시간 이벤트 모니터링">
+          <img src="https://i.imgur.com/l6SFtlz.jpegE" alt="설비 밀집 제조 라인">
+          <img src="https://i.imgur.com/4Cv6YzV.png" alt="작업자 안전 확인">
+          <img src="https://i.imgur.com/rTSAH5z.jpeg" alt="현장 타워램프 경보">
+          <img src="https://i.imgur.com/JTi8djX.jpeg" alt="비상정지 버튼 연계">
+          <img src="https://i.imgur.com/Hm8pJE4.jpeg" alt="위험 공정 작업 구역">
+        </div>
+      </div>
+    </section>
+
+    <section id="benefit">
+      <div class="wrap">
+        <div class="head">
+          <div class="kicker">Target & Benefit</div>
+          <h2>이런 현장에 특히 효과적입니다</h2>
+          <p class="lead">스마트 안전설비 항목 중 작업자 안전 경보 시스템에 직접적으로 부합하며, 중소 제조현장의 부담을 낮추는 방향으로 적용할 수 있습니다.</p>
+        </div>
+
+        <div class="target-grid">
+          <article class="target-card"><img src="https://i.imgur.com/JTi8djX.jpeg" alt="비상정지 버튼"><p>비상정지 버튼이 설치된 기계·설비 사용 제조사업장</p></article>
+          <article class="target-card"><img src="https://i.imgur.com/Hm8pJE4.jpeg" alt="위험 공정"><p>끼임·말림·절단·협착 등 사고 위험 공정 보유 현장</p></article>
+          <article class="target-card"><img src="https://i.imgur.com/VZKWqQv.jpeg" alt="현장 사각지대"><p>상시 관리자 부재 또는 현장 사각지대가 존재하는 작업장</p></article>
+          <article class="target-card"><img src="https://i.imgur.com/l6SFtlz.jpeg" alt="중소 제조기업 안전관리"><p>안전관리 인력이 제한적이고 초기 대응 강화가 필요한 중소 제조기업</p></article>
+        </div>
+
+        <div class="benefit-box">
+          <h3>기대효과</h3>
+          <div class="benefit-grid">
+            <div class="benefit">사고 또는 위험상황 인지 후 전파 시간 단축</div>
+            <div class="benefit">관리자 부재 시에도 원격 상황 확인 가능</div>
+            <div class="benefit">현장 초기 대응 체계 표준화</div>
+            <div class="benefit">비상 이벤트 발생 이력 관리 기능</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="white">
+      <div class="wrap">
+        <div class="head">
+          <div class="kicker">Key Differentiation</div>
+          <h2>단순 경보가 아니라<br>현장 확인까지 이어지는 안전관리 체계</h2>
+        </div>
+
+        <div class="diff-grid">
+          <div class="diff-card"><div class="ico">🔗</div><div><h3>음성 인지 + 비상정지 + 알림 + CCTV 통합</h3><p>위험 감지부터 현장 확인까지 하나의 흐름으로 연결합니다.</p></div></div>
+          <div class="diff-card"><div class="ico">📹</div><div><h3>CCTV 스트리밍 화면을 알림 메시지로 전달</h3><p>관리자가 메시지에서 바로 현장 상황을 확인할 수 있습니다.</p></div></div>
+          <div class="diff-card"><div class="ico">🧩</div><div><h3>기존 비상정지 인프라 활용</h3><p>비상정지 회로 또는 제어 입력부와 연계하여 공사 범위를 줄입니다.</p></div></div>
+          <div class="diff-card"><div class="ico">⚡</div><div><h3>중대사고 이전 초기 대응 속도 향상</h3><p>위험인지 → 관제 → 확인 → 대응까지 전체 시간을 단축합니다.</p></div></div>
+          <div class="diff-card"><div class="ico">📈</div><div><h3>대규모 통합관제 없이 안전관리 고도화</h3><p>소규모 시스템으로도 안전관리 수준을 현실적으로 끌어올립니다.</p></div></div>
+          <div class="diff-card"><div class="ico">🏭</div><div><h3>제조현장 환경 고려</h3><p>소음, 먼지, 진동 등 현장 조건에 맞춘 구성과 설치 포인트를 검토합니다.</p></div></div>
+        </div>
+
+        <div class="final-gallery">
+          <img src="IMAGE_URL_04_CONTROL_ROOM" alt="PC 관제 시스템">
+          <img src="IMAGE_URL_10_TOWER_LAMP" alt="타워램프 경보">
+          <img src="IMAGE_URL_11_CCTV_CAMERA" alt="CCTV 연계 확인">
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="wrap">
+        <h2>지금 바로 스마트 안전 경보 시스템을 도입하세요</h2>
+        <p>작업자의 생명을 지키고, 기업의 안전 경쟁력을 높이는 현실적인 안전관리 체계로 제안드립니다.</p>
+        <a class="btn" href="mailto:ycgroup.cwsong@gmail.com?subject=작업자 안전 경보 시스템 문의">상담 문의하기</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div><b>YC 코퍼레이션</b> · 음성 인식 기반 작업자 안전 경보 시스템</div>
+      <div>위험 감지 · 즉시 알림 · 장비 제어 · CCTV 관제</div>
+    </div>
+  </footer>
+</body>
+</html>
