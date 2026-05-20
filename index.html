@@ -815,3 +815,31 @@
 
 </body>
 </html>
+<style>
+  /* 1. 화면 높이 고정 및 넘침 숨김(overflow: hidden) 완전 봉인 해제 */
+  html, body {
+    height: auto !important; 
+    min-height: 100vh !important;
+    overflow: visible !important; 
+    position: static !important;
+  }
+  
+  /* 2. 안전관리 시스템 화면을 감싸는 메인 껍데기들(div) 고집 꺾기 */
+  #root, #app, .wrap, .container, .main-container, main {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow: visible !important;
+  }
+</style>
+
+<script>
+  // 3. 자바스크립트로 확인사살 (원래 있던 CSS가 아무리 강해도 강제로 덮어씌움)
+  window.addEventListener('DOMContentLoaded', (event) => {
+    setTimeout(() => {
+      document.documentElement.style.setProperty('overflow', 'visible', 'important');
+      document.documentElement.style.setProperty('height', 'auto', 'important');
+      document.body.style.setProperty('overflow', 'visible', 'important');
+      document.body.style.setProperty('height', 'auto', 'important');
+    }, 500); // 페이지 로딩 후 0.5초 뒤에 잘림 방지 강제 해제
+  });
+</script>
