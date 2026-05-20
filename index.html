@@ -6,12 +6,6 @@
   <title>작업자 안전 경보 시스템 | YC 코퍼레이션</title>
   <meta name="description" content="음성 인식 기반 위험 감지, 설비 비상정지, 현장 경보, CCTV 관제, 모바일 알림까지 연결하는 제조현장 스마트 안전 경보 시스템" />
 
-  <!--
-    이미지 링크 교체 위치
-    아래 IMAGE_URL_01 ~ IMAGE_URL_13 부분만 실제 이미지 주소로 바꾸면 됩니다.
-    예: https://your-domain.com/images/factory-control-room.jpg
-  -->
-
   <style>
     :root{
       --dark:#020817;
@@ -33,7 +27,7 @@
 
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-body{
+    body{
       margin:0;
       font-family:Pretendard,"Noto Sans KR","Apple SD Gothic Neo",Arial,sans-serif;
       color:var(--text);
@@ -42,16 +36,9 @@ body{
       letter-spacing:-0.025em;
       word-break:keep-all;
       overflow-x:hidden;
-      background:#f5faff;
     }
     a{color:inherit;text-decoration:none}
     img{display:block;width:100%;height:auto}
-    /* PC/모바일 화면 이미지는 위아래가 잘리지 않도록 별도 처리 */
-    img.screen-img{
-      object-fit:contain !important;
-      background:#eef6ff;
-      padding:10px;
-    }
     .wrap{width:min(var(--max),calc(100% - 40px));margin:0 auto}
 
     .nav{
@@ -78,11 +65,11 @@ body{
     .btn.ghost{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.3);box-shadow:none}
 
     .hero{
-      min-height:auto;
+      min-height:100vh;
       position:relative;
       overflow:hidden;
       color:white;
-      padding:96px 0 72px;
+      padding:132px 0 86px;
       background:
         linear-gradient(90deg,rgba(2,8,23,.96) 0%,rgba(2,8,23,.88) 44%,rgba(2,8,23,.44) 100%),
         url("IMAGE_URL_01_HERO_FACTORY_CONTROL_ROOM") center/cover no-repeat;
@@ -457,7 +444,7 @@ body{
     @media(max-width:1000px){
       .links{display:none}
       .nav .inner{height:66px}
-      .hero{padding:88px 0 64px;min-height:auto}
+      .hero{padding-top:112px;min-height:auto}
       .hero-grid,.arch-layout,.field-layout,.problem-grid,.layers,.module-grid,.flow-track,.field-gallery,.target-grid,.benefit-grid,.diff-grid,.final-gallery,.photo-strip{grid-template-columns:1fr}
       .control-card{margin-top:8px}
       .flow-step:not(:last-child)::after,.layer:not(:last-child)::after{display:none}
@@ -519,7 +506,7 @@ body{
       <div class="wrap">
         <div class="head">
           <div class="kicker">Why Now</div>
-          <h2>제조현장의 사고 대응은<br>“감지 이후 몇 초”에서 갈립니다</h2>
+          <h2>제조현장의 사고 대응은<br>"감지 이후 몇 초"에서 갈립니다</h2>
           <p class="lead">소음, 설비 밀집, 사각지대, 단독 작업 환경에서는 위험 상황 공유와 관리자 확인이 늦어질 수 있습니다.</p>
         </div>
 
@@ -600,7 +587,7 @@ body{
 
         <div class="photo-strip">
           <img src="https://i.imgur.com/rTSAH5z.jpeg" alt="현장 타워램프 경보">
-          <img class="screen-img" src="https://i.imgur.com/K5l78gL.png" alt="관제 시스템 화면">
+          <img src="https://i.imgur.com/K5l78gL.png" alt="관제 시스템 화면">
           <img src="https://i.imgur.com/4Cv6YzV.png" alt="산업용 CCTV 카메라">
           <img src="https://i.imgur.com/JTi8djX.jpeg" alt="비상정지 버튼">
         </div>
@@ -621,7 +608,7 @@ body{
             <div class="module-body"><span class="module-no">01</span><h3>음성 인식 마이크 모듈</h3><ul><li>작업장 내 음성 신호 수집</li><li>지정 위험 언어 인식용 입력</li><li>비명·고음량 데시벨 감지</li></ul></div>
           </article>
           <article class="module">
-            <img class="screen-img" src="https://i.imgur.com/NhmoIum.png" alt="음성 인식 처리 프로그램">
+            <img src="https://i.imgur.com/NhmoIum.png" alt="음성 인식 처리 프로그램">
             <div class="module-body"><span class="module-no">02</span><h3>음성인식 처리 프로그램</h3><ul><li>위험 언어 인식</li><li>고음량 신호 감지</li><li>비상 이벤트 생성 및 연동</li></ul></div>
           </article>
           <article class="module">
@@ -667,7 +654,7 @@ body{
             <div class="flow-step"><div class="flow-no">11</div><span class="emoji">📲</span><b>관리자 알림 발송</b><small>모바일 메시지</small></div>
             <div class="flow-step"><div class="flow-no">12</div><span class="emoji">✅</span><b>수동 해제 및 저장</b><small>조치 이력 관리</small></div>
           </div>
-          <img class="flow-photo screen-img" src="https://i.imgur.com/gIyB5gn.jpeg" alt="모바일 알림과 사고 이력 화면">
+          <img class="flow-photo" src="https://i.imgur.com/gIyB5gn.jpeg" alt="모바일 알림과 사고 이력 화면">
         </div>
       </div>
     </section>
@@ -680,8 +667,8 @@ body{
           <p class="lead">설비, 경보장치, 관제 화면, 작업자 동선까지 함께 고려해 중소 제조현장에 부담이 적은 안전관리 체계를 제안합니다.</p>
         </div>
         <div class="field-gallery">
-          <img class="tall screen-img" src="https://i.imgur.com/K5l78gL.png" alt="관제실 실시간 이벤트 모니터링">
-          <img src="https://i.imgur.com/l6SFtlz.jpegE" alt="설비 밀집 제조 라인">
+          <img class="tall" src="https://i.imgur.com/K5l78gL.png" alt="관제실 실시간 이벤트 모니터링">
+          <img src="https://i.imgur.com/l6SFtlz.jpeg" alt="설비 밀집 제조 라인">
           <img src="https://i.imgur.com/4Cv6YzV.png" alt="작업자 안전 확인">
           <img src="https://i.imgur.com/rTSAH5z.jpeg" alt="현장 타워램프 경보">
           <img src="https://i.imgur.com/JTi8djX.jpeg" alt="비상정지 버튼 연계">
@@ -734,7 +721,7 @@ body{
         </div>
 
         <div class="final-gallery">
-          <img class="screen-img" src="https://i.imgur.com/gIyB5gn.jpeg" alt="PC 관제 시스템">
+          <img src="https://i.imgur.com/gIyB5gn.jpeg" alt="PC 관제 시스템">
           <img src="https://i.imgur.com/rTSAH5z.jpeg" alt="타워램프 경보">
           <img src="https://i.imgur.com/4Cv6YzV.png" alt="CCTV 연계 확인">
         </div>
@@ -745,9 +732,8 @@ body{
       <div class="wrap">
         <h2>지금 바로 스마트 안전 경보 시스템을 도입하세요</h2>
         <p>작업자의 생명을 지키고, 기업의 안전 경쟁력을 높이는 현실적인 안전관리 체계로 제안드립니다.</p>
-        <a class="btn" href="https://wkf.ms/3RnOm5q" target="_blank" rel="noopener">
-  상담 문의하기
-</a>
+        <a class="btn" href="https://wkf.ms/3RnOm5q" target="_blank" rel="noopener">상담 문의하기</a>
+      </div>
     </section>
   </main>
 
@@ -757,26 +743,8 @@ body{
       <div>위험 감지 · 즉시 알림 · 장비 제어 · CCTV 관제</div>
     </div>
   </footer>
+
   <script>
-    function sendHeightToSixshop() {
-      const height = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.offsetHeight,
-        document.body.clientHeight,
-        document.documentElement.clientHeight
-      );
-
-      window.parent.postMessage(
-        {
-          type: "setHeight",
-          height: height
-        },
-        "*"
-      );
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
       const revealSelectors = [
         ".head",
@@ -801,7 +769,6 @@ body{
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
             observer.unobserve(entry.target);
-            sendHeightToSixshop();
           }
         });
       }, { threshold: 0.14, rootMargin: "0px 0px -40px 0px" });
@@ -816,32 +783,34 @@ body{
           flowSteps.forEach((step) => step.classList.remove("is-active"));
           flowSteps[currentStep].classList.add("is-active");
           currentStep = (currentStep + 1) % flowSteps.length;
-          sendHeightToSixshop();
         };
-
         activateFlow();
         setInterval(activateFlow, 1200);
       }
-
-      sendHeightToSixshop();
-
-      if ("ResizeObserver" in window) {
-        const resizeObserver = new ResizeObserver(() => {
-          sendHeightToSixshop();
-        });
-        resizeObserver.observe(document.body);
-      }
     });
 
-    window.addEventListener("load", () => {
-      sendHeightToSixshop();
-      setTimeout(sendHeightToSixshop, 300);
-      setTimeout(sendHeightToSixshop, 1000);
-      setTimeout(sendHeightToSixshop, 2000);
-      setTimeout(sendHeightToSixshop, 3500);
+    /* =====================================================
+       식스샵 iframe 높이 자동 전달 (이 부분이 추가된 코드)
+       ===================================================== */
+    function sendHeight() {
+      window.parent.postMessage(
+        { type: "setHeight", height: document.body.scrollHeight },
+        "*"
+      );
+    }
+
+    // 페이지 완전히 로드된 후 전송
+    window.addEventListener("load", sendHeight);
+
+    // 탭 전환·애니메이션 등 동적 높이 변화 감지
+    new MutationObserver(sendHeight).observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true
     });
 
-    window.addEventListener("resize", sendHeightToSixshop);
+    // 브라우저 리사이즈 대응
+    window.addEventListener("resize", sendHeight);
   </script>
 
 </body>
