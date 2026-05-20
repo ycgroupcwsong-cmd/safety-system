@@ -234,7 +234,17 @@
     .flow-step .emoji{font-size:34px;display:block;margin-bottom:8px}
     .flow-step b{display:block;font-size:16px;line-height:1.32;margin-bottom:8px}
     .flow-step small{color:#5e6e82;font-weight:760;line-height:1.48}
-    .flow-photo{margin-top:24px;height:320px;object-fit:cover;border-radius:28px;box-shadow:var(--soft)}
+    .flow-photo{
+  margin-top:24px;
+  width:100%;
+  height:auto !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  object-position:center center;
+  border-radius:28px;
+  box-shadow:var(--soft);
+  background:#fff;
+}
 
     .field-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:30px;align-items:center}
     .field-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
